@@ -1,0 +1,9 @@
+Reproducibility of the results from the nature article.
+
+Feasibility - what is required for it to be used on a real-time setting on ex. the Milliampere ferry
+
+	-What do the sensors need to detect? Can it detect it?
+	-Can it be run in real time?
+	-What kind of equipment does it need to function?
+	-Prize points?
+

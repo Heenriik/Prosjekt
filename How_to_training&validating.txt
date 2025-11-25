@@ -1,0 +1,14 @@
+---------------------
+TRAINING RUN-COMMAND
+---------------------
+ORIGINAL:
+python main.py --ngpus 1 --backbone resnet50 --data_dir ../ --workers 8 --epochs 40000 --checkpoint_dir supervised_crop --lr 1e-3 --weight-decay 1e-3 --train_T --train_v --no_log_images --eval_every 500 --res full --batch-size 10 --seed 42
+
+TEST:
+python main.py --ngpus 1 --backbone resnet50 --data_dir ../ --workers 4 --epochs 250 --checkpoint_dir supervised_crop --lr 1e-3 --weight-decay 1e-3 --train_T --train_v --no_log_images --eval_every 10 --res half --batch-size 2 --seed 42 --fold 0
+
+(for Hybrid 50/50 loss, use flag: --unsupervised)
+---------------------------------------------------------------
+VALIDATION RUN-COMMAND (only do on already trained checkpoints)
+---------------------------------------------------------------
+add at the end of training command: --resume (trained model checkpoint) --eval
