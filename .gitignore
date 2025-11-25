@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+supervised_crop*/
+test_run*/
+*.png
+TeXNet/Check_TeX_Vision_for_TeXNet_Outputs.txt
+LICENSE
+*.npy
+lightning_logs/
+*.ckpt

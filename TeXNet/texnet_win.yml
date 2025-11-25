@@ -1,0 +1,22 @@
+name: hadar
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-image
+  - pip
+  - pip:
+    - pytorch-lightning
+    - segmentation-models-pytorch
+    - torchmetrics
+    - configargparse
+    - typing-extensions
+    - tqdm
+    - tensorboard
