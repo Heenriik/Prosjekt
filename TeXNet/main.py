@@ -72,7 +72,7 @@ if __name__ == "__main__":
     # Detect available accelerator
     if torch.cuda.is_available():
         accelerator = "gpu"
-        strategy = 'ddp_find_unused_parameters_false' if args.ngpus > 1 else 'auto'
+        strategy = 'ddp_find_unused_parameters_false' if args.ngpus > 1 else None
     else:
         accelerator = "cpu"
         strategy = None

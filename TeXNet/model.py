@@ -13,12 +13,12 @@ import segmentation_models_pytorch as smp
 
 DEBUG = True
 
-hbar = 105457180e-42
-h    = 2*math.pi*hbar
-c    = 299792458
-kb   = 138064852e-31
-e    = 1.60218e-19
-cB   = h*c/kb
+hbar = 105457180e-42    # Reduced Planck's constant
+h    = 2*math.pi*hbar   # Planck's constant
+c    = 299792458        # speed of light in vacuum
+kb   = 138064852e-31    # Boltzmann constant
+e    = 1.60218e-19      # elementary charge
+cB   = h*c/kb           # constant used in BB formula
 
 def dprint(*args, **kwargs):
     # To quickly turn off dprint

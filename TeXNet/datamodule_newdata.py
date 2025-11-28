@@ -172,7 +172,7 @@ class HADARMultipleScenes():
 
 ### COMMENTED OUT EVERYTHING - need to load on-demand instead (cause not enough ram) -H ###
     def _load_data(self):
-        """# load the data location into two variables and return them
+        # load the data location into two variables and return them
         self.S_beta = []
         self.S = []
         self.tMaps = []
@@ -234,7 +234,7 @@ class HADARMultipleScenes():
         # self.tMaps = torch.stack(self.tMaps)
         # self.eMaps = torch.stack(self.eMaps)
         # self.vMaps = torch.stack(self.vMaps)
- """
+ 
     def __len__(self):
         if self.split == "train":
             return self.num_points
@@ -250,8 +250,8 @@ class HADARMultipleScenes():
             index = index_ // 2 # choose the scene and the frame
             size_idx = index_ % 2 # choose the size/crop of the frame
         
-        ### Preload lists - commented out for on-demand loading -H ###
-        """ S_beta = self.S_beta[index]
+        ### Preload lists - comment out for on-demand loading -H ###
+        S_beta = self.S_beta[index]
         S = self.S[index]
         tMap = self.tMaps[index]
         eMap = self.eMaps[index]
@@ -263,42 +263,42 @@ class HADARMultipleScenes():
         if self.tgt_transforms is not None:
             tMap = self.tgt_transforms(tMap)
             eMap = self.tgt_transforms(eMap)
-            vMap = self.tgt_transforms(vMap) """
+            vMap = self.tgt_transforms(vMap)
         
-        ### On-demand loading -H ###
-        # Load data on-demand instead of from pre-loaded lists
-        S_beta_data = np.load(self.S_beta_files[index])
-        S_beta = np.squeeze(S_beta_data)
-        if S_beta.shape[0] == 54:
-            S_beta = S_beta[4:53]
-        S_beta = torch.from_numpy(S_beta).type(torch.float)
+        # ### On-demand loading -H ###
+        # # Load data on-demand instead of from pre-loaded lists
+        # S_beta_data = np.load(self.S_beta_files[index])
+        # S_beta = np.squeeze(S_beta_data)
+        # if S_beta.shape[0] == 54:
+        #     S_beta = S_beta[4:53]
+        # S_beta = torch.from_numpy(S_beta).type(torch.float)
         
-        # Load S
-        S_data = scio.loadmat(self.S_files[index])
-        if "S" in S_data.keys():
-            S_data = S_data["S"]
-        elif "HSI" in S_data.keys():
-            S_data = S_data["HSI"]
-        S_data = np.transpose(S_data, (2, 0, 1))
-        if S_data.shape[0] == 54:
-            S_data = S_data[4:53]
-        S_data = (S_data - self.S_mu) / self.S_std
-        S = torch.from_numpy(S_data).type(torch.float)
+        # # Load S
+        # S_data = scio.loadmat(self.S_files[index])
+        # if "S" in S_data.keys():
+        #     S_data = S_data["S"]
+        # elif "HSI" in S_data.keys():
+        #     S_data = S_data["HSI"]
+        # S_data = np.transpose(S_data, (2, 0, 1))
+        # if S_data.shape[0] == 54:
+        #     S_data = S_data[4:53]
+        # S_data = (S_data - self.S_mu) / self.S_std
+        # S = torch.from_numpy(S_data).type(torch.float)
         
-        # Load T
-        tMap_data = scio.loadmat(self.T_files[index])["tMap"]
-        tMap_data = (tMap_data - self.T_mu) / self.T_std
-        tMap = torch.from_numpy(tMap_data).type(torch.float)
+        # # Load T
+        # tMap_data = scio.loadmat(self.T_files[index])["tMap"]
+        # tMap_data = (tMap_data - self.T_mu) / self.T_std
+        # tMap = torch.from_numpy(tMap_data).type(torch.float)
         
-        # Load e
-        eMap_data = np.load(self.e_files[index])
-        eMap = torch.from_numpy(eMap_data).type(torch.long)
+        # # Load e
+        # eMap_data = np.load(self.e_files[index])
+        # eMap = torch.from_numpy(eMap_data).type(torch.long)
         
-        # Load v
-        vMap_data = scio.loadmat(self.v_files[index])["vMap"]
-        vMap_data = np.transpose(vMap_data, (2, 0, 1))
-        vMap = torch.from_numpy(vMap_data).type(torch.float)
-        ### End of on-demand loading -H ###
+        # # Load v
+        # vMap_data = scio.loadmat(self.v_files[index])["vMap"]
+        # vMap_data = np.transpose(vMap_data, (2, 0, 1))
+        # vMap = torch.from_numpy(vMap_data).type(torch.float)
+        # ### End of on-demand loading -H ###
 
         if self.split == 'train' or (self.split == "val" and size_idx == 0):
             ### Arbitrary Crop ####

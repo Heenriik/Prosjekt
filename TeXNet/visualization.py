@@ -33,7 +33,7 @@ def get_X_from_V(S, v):
 
     # print(v[0])
 
-    X = v[0]*S1 + v[1]*S1
+    X = v[0]*S1 + v[1]*S2       # -H fixed bug, was v[1]^S1 insted of v[1]*S2
 
     return X
 
@@ -55,7 +55,7 @@ def visualize_TeX(TeX, fname, max_vals, kind='pred'):
     TeX[..., 2] /= S_max # divide by the maximum of np.mean(S_half) among each half.
 
     TeX_ = mpl.colors.hsv_to_rgb(TeX)/np.amax(mpl.colors.hsv_to_rgb(TeX))
-    TeX_ = ((TeX_ - np.min(TeX_))/(np.max(TeX_) - np.min(TeX_)*255.).astype(np.uint8))
+    TeX_ = ((TeX_ - np.min(TeX_))/(np.max(TeX_) - np.min(TeX_))*255.).astype(np.uint8) # -H fixed! Was (TeX_ - min) / (max - min * 255)
     plt.imshow(TeX_)
     plt.title('TeX '+kind)
     plt.axis('off')
@@ -415,7 +415,7 @@ for j in range(44):
         C, H, W = S_pred.shape
         S_max1 = np.maximum(np.mean(S_pred[:, :H//2]), np.mean(S_pred[:, H//2:]))
         S_max2 = np.maximum(np.mean(S_true[:, :H//2]), np.mean(S_true[:, H//2:]))
-        S_max = np.maximum(S_max1, S_max1)
+        S_max = np.maximum(S_max1, S_max2)      # -H fixed bug, was S_max1 only
 
         visualize_TeX(TeX_pred, fname=f'TeX_pred_{i+j*n}.png', max_vals=[T_max, S_max], kind='pred')
         visualize_TeX(TeX_true, fname=f'TeX_GT_{i+j*n}.png', max_vals=[T_max, S_max], kind='gt')
